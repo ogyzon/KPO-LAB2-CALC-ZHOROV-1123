@@ -1,8 +1,7 @@
 import tkinter as tk
-from factory import CalculatorFactory
+from view import Calculators
 
 if __name__ == "__main__":
     root = tk.Tk()
-    factory = CalculatorFactory()
-    calculator = factory.create_calculator(root)
+    app = Calculators(root)
     root.mainloop()
