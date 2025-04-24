@@ -1,26 +1,11 @@
 import tkinter as tk
 from tkinter import font
 
-class DisplayComponent:
-    def create_display(self, root, input_text):
-        display_frame = tk.Frame(root, bg="#f0f0f0")
-        display_frame.pack(expand=True, fill="both", padx=10, pady=10)
-
-        display_font = font.Font(size=24)
-        display = tk.Entry(
-            display_frame,
-            textvariable=input_text,
-            font=display_font,
-            justify="right",
-            bd=0,
-            bg="#ffffff",
-            fg="#000000",
-            insertwidth=0,
-        )
-        display.pack(expand=True, fill="both", ipady=10)
-
 class ButtonsComponent:
-    def create_buttons(self, root, button_click_callback):
+    def __init__(self, button_click_handler):
+        self.button_click_handler = button_click_handler
+    
+    def create_buttons(self, root):
         buttons_frame = tk.Frame(root, bg="#f0f0f0")
         buttons_frame.pack(expand=True, fill="both", padx=10, pady=10)
 
@@ -40,7 +25,7 @@ class ButtonsComponent:
                 bg="#e0e0e0",
                 fg="#000000",
                 bd=0,
-                command=lambda t=text: button_click_callback(t),
+                command=lambda t=text: self.button_click_handler(t),
             )
             button.grid(row=row, column=col, sticky="nsew", padx=5, pady=5)
 
