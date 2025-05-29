@@ -2,6 +2,7 @@ import os
 import sys
 import tkinter as tk
 from tkinter import font
+from config import FontConfig, DisplayConfig, AppConfig, ThemeConfig
 
 if sys.platform == "win32":
     import ctypes
@@ -10,31 +11,34 @@ if sys.platform == "win32":
         full_path = os.path.abspath(font_path)
         ctypes.windll.gdi32.AddFontResourceExW(full_path, 0x10, 0)
 
+
 class DisplayComponent:
     def __init__(self, input_text):
         self.input_text = input_text
 
     def create_display(self, root):
-        display_frame = tk.Frame(root, bg="#f0f0f0")
+        from config import ThemeConfig
+
+        display_frame = tk.Frame(root, bg=ThemeConfig.BACKGROUND)
+
         display_frame.pack(expand=True, fill="both", padx=10, pady=10)
 
         # Загружаем шрифт
-        font_path = "resources/fonts/SFProText-Regular.ttf"
-        load_custom_font(font_path)
+        load_custom_font(FontConfig.FONT_PATH)
 
         try:
-            display_font = font.Font(family="SF Pro Text", size=24)
+            display_font = font.Font(family=FontConfig.FONT_NAME, size=FontConfig.DISPLAY_SIZE)
         except tk.TclError:
-            display_font = font.Font(size=24)
+            display_font = font.Font(size=FontConfig.DISPLAY_SIZE)
 
         display = tk.Entry(
             display_frame,
             textvariable=self.input_text,
             font=display_font,
-            justify="right",
-            bd=0,
-            bg="#ffffff",
-            fg="#000000",
+            justify=DisplayConfig.JUSTIFY,
+            bd=DisplayConfig.BORDER_WIDTH,
+            bg=DisplayConfig.BACKGROUND,
+            fg=DisplayConfig.FOREGROUND,
             insertwidth=0,
         )
         display.pack(expand=True, fill="both", ipady=10)
